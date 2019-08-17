@@ -8,11 +8,24 @@ public class PlayerController : MonoBehaviour
     public float speed;
     private Rigidbody2D _rigidbody2D;
 
-    private Animator _animator;
+    public GameObject slash;
+
+    public Animator _animator;
+    //cobamelee
+    private float timeBtwAttack;
+    public float startTimeAttack;
+
+    public Transform attackPos;
+    public LayerMask whatIsEnemies;
+
+    public float attackRange;
+    public int damage;
+
 
     // Start is called before the first frame update
     void Start()
     {
+
         _rigidbody2D = GetComponent<Rigidbody2D>();
         _animator = GetComponent<Animator>();
     }
@@ -20,67 +33,42 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        Vector3 movement = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0.0f);
+
+        _rigidbody2D.velocity = movement * speed;
+        _animator.SetFloat("Horizontal", Input.GetAxis("Horizontal"));
+
+        _animator.SetFloat("Horizontal", movement.x);
+        _animator.SetFloat("Vertical", movement.y);
+        _animator.SetFloat("Magnitude", movement.magnitude);
+
+
+        transform.position = transform.position + movement * Time.deltaTime;
+
+
+        if (timeBtwAttack <= 0)
+        {
+            if (Input.GetKey(KeyCode.Space))
+            {
+                Collider2D[] enemiesToDamage = Physics2D.OverlapCircleAll(attackPos.position, attackRange, whatIsEnemies);
+                for (int i = 0; i < enemiesToDamage.Length; i++)
+                {
+                    enemiesToDamage[i].GetComponent<Cubes>().TakeDamage(damage);
+                }
+            }
+            timeBtwAttack = startTimeAttack;
+        }
+        else
+        {
+            timeBtwAttack -= Time.deltaTime;
+            _animator.SetBool("space", false);
+
+        }
     }
 
-    private void FixedUpdate()
+    void OnDrawGizmosSelected()
     {
-        float moveX = Input.GetAxis("Horizontal");                          // bakal ngeset nilai secara otomatis
-        float moveY = Input.GetAxis("Vertical");
-
-        Vector2 direction = new Vector2(moveX, moveY);
-
-        _rigidbody2D.velocity = direction * speed;
-
-        Vector2 min = Camera.main.ViewportToWorldPoint(new Vector2(0, 0));
-        Vector2 max = Camera.main.ViewportToWorldPoint(new Vector2(1, 1));  // bagian atas kanan
-
-        min.x += 0.285f;
-        //max.x += 0.285f;
-        max.x += 0f;
-        min.y += 0.250f;
-        max.y += 0.250f;
-
-        Vector2 pos = _rigidbody2D.position;
-
-        pos.x = Mathf.Clamp(pos.x, min.x, max.x);                           // dia tidak akan melewati min dan max x nya
-        pos.y = Mathf.Clamp(pos.y, min.y, max.y);
-
-
-        _rigidbody2D.position = pos;                                        // ga bakal lewat minimum dan maksimumnya
-
-        if (moveX < 0)
-        {
-            _animator.SetBool("turnLeft", true);
-        }
-        else if (moveX == 0)
-        {
-            _animator.SetBool("turnLeft", false);
-            _animator.SetBool("turnRight", false);
-        }
-        else
-        {
-            _animator.SetBool("turnRight", true);
-
-        }
-
-
-
-        if (moveY < 0)
-        {
-            _animator.SetBool("turnDown", true);
-        }
-        else if (moveY == 0)
-        {
-            _animator.SetBool("turnDown", false);
-            _animator.SetBool("turnUp", false);
-        }
-        else
-        {
-            _animator.SetBool("turnUp", true);
-
-        }
-
+        Gizmos.color = Color.red;
+        Gizmos.DrawSphere(attackPos.position, attackRange);
     }
-
 }

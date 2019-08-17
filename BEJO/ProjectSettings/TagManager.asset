@@ -3,7 +3,9 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Cubes
+  - PlayerSlah
   layers:
   - Default
   - TransparentFX
@@ -13,7 +15,7 @@ TagManager:
   - UI
   - 
   - 
-  - 
+  - Cubes
   - 
   - 
   - 
@@ -43,4 +45,13 @@ TagManager:
     locked: 0
   - name: Player
     uniqueID: 515271631
+    locked: 0
+  - name: Clouds
+    uniqueID: 2826094527
+    locked: 0
+  - name: Explosion
+    uniqueID: 1715744795
+    locked: 0
+  - name: Cubes
+    uniqueID: 3970045167
     locked: 0
