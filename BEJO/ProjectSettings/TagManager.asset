@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Cubes
   - PlayerSlah
+  - CubeA
+  - CubeB
   layers:
   - Default
   - TransparentFX

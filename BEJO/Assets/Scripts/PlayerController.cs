@@ -50,6 +50,7 @@ public class PlayerController : MonoBehaviour
         {
             if (Input.GetKey(KeyCode.Space))
             {
+                Instantiate(slash, transform.position, Quaternion.identity);
                 Collider2D[] enemiesToDamage = Physics2D.OverlapCircleAll(attackPos.position, attackRange, whatIsEnemies);
                 for (int i = 0; i < enemiesToDamage.Length; i++)
                 {
@@ -61,7 +62,6 @@ public class PlayerController : MonoBehaviour
         else
         {
             timeBtwAttack -= Time.deltaTime;
-            _animator.SetBool("space", false);
 
         }
     }

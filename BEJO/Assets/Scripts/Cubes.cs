@@ -11,7 +11,7 @@ public class Cubes : MonoBehaviour
     private Animator _animator;
 
     public GameObject explosion;
-
+    public GameObject miniexplosion;
 
     //public Transform[] moveSpots; step1
     public Transform moveSpots;
@@ -51,17 +51,18 @@ public class Cubes : MonoBehaviour
                 waitTime -= Time.deltaTime;
             }
         }
-        Debug.Log("HEALTH:" + health);
+        //Debug.Log("HEALTH:" + health);
 
         if (health == 0)
         {
+            Instantiate(explosion, transform.position, Quaternion.identity);
             Destroy(gameObject);
         }
     }
 
     public void TakeDamage(int damage)
     {
-        Instantiate(explosion, transform.position, Quaternion.identity);
+        Instantiate(miniexplosion, transform.position, Quaternion.identity);
         health -= damage;
         Debug.Log("damage TAKEN" + health);
     }
