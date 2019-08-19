@@ -23,6 +23,10 @@ public class Cubes : MonoBehaviour
     private float waitTime;
     public float startWaitTime;
 
+    public string cubeTag;
+
+    //private Questions ans = gameObject.GetComponent<Questions>();
+    //private string ansTag = ans.answerTag;
 
     // Start is called before the first frame update
     void Start()
@@ -65,8 +69,17 @@ public class Cubes : MonoBehaviour
         Instantiate(miniexplosion, transform.position, Quaternion.identity);
         health -= damage;
         Debug.Log("damage TAKEN" + health);
-    }
+        cubeTag = gameObject.tag; //tag cube yg di-slash
+        Debug.Log(cubeTag);
 
-    
+        //kalo tagnya sama jawabannya bener
+        if (gameObject.CompareTag(ansTag)) //compare sama tag di answer
+        {
+            Debug.Log("correct answer");
+        } else
+        {
+            Debug.Log("Wrong answer");
+        }
+    }
 
 }
