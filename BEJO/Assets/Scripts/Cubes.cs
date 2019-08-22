@@ -73,13 +73,13 @@ public class Cubes : MonoBehaviour
         Debug.Log(cubeTag);
 
         //kalo tagnya sama jawabannya bener
-        if (gameObject.CompareTag(ansTag)) //compare sama tag di answer
-        {
-            Debug.Log("correct answer");
-        } else
-        {
-            Debug.Log("Wrong answer");
-        }
+         if (gameObject.CompareTag("CubeA")) //compare sama tag di answer
+         {
+             Debug.Log("correct answer");
+         } else
+         {
+             Debug.Log("Wrong answer");
+         }
     }
 
 }

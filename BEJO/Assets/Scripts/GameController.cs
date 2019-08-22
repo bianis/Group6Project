@@ -19,6 +19,7 @@ public class GameController : MonoBehaviour
 
     [SerializeField]
     private Text questText;
+    private Text points;
 
     // Start is called before the first frame update
     void Start()
